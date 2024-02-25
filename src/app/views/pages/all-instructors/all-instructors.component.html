@@ -1,0 +1,137 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Instructors List</li>
+    </ol>
+  </nav>
+  
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table datatable  class=" table table-hover table-row-border hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Mobile No</th>
+                  <th>Email</th>
+                  <th>Delete</th>
+                  <th>Assign lecture</th>
+                 <th>view lecture</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let instructor of allInstructors; let i = index">
+                  
+                    <td>{{i+1}}</td>
+                  <td>{{instructor.name}}</td>
+                  <td>{{instructor.mobile}}</td>
+                  <td>{{instructor.email}}</td>
+                  
+                
+                  <td>
+                    <button class="btn btn-primary me-2" (click)="delete(instructor)">Remove</button>
+                  </td>
+                  <td>
+                     <button class="btn btn-primary me-2" (click)="openLgModal(lgModal,instructor)">
+                        Assign</button>
+                  </td>
+                  <td>
+                    <span >
+                      <button class="btn btn-primary me-2" (click)="openLgModalview(lgModalView,instructor)">
+                        View </button>
+                    </span>
+                   
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   
+  <ng-template #lgModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Assign Lecture</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form class="forms-sample" (ngSubmit)="assignBatch()">
+        
+
+          <div class="mb-3">
+            <label for="courseName" class="form-label">select course Name</label>
+           <ng-select  [items]="allCourse" bindValue="_id" bindLabel="name" [(ngModel)]="courseId" 
+           name="courseId"  placeholder="Please enter course name"  (change)="getBatch(courseId)">
+           <option value="0">Select course name</option>
+           </ng-select>
+
+           <div class="mb-3">
+            <label for="Batch" class="form-label">Batch name</label>
+                <ng-select  [items]="allBatches" bindValue="batchName" bindLabel="batchName" [(ngModel)]="Batch" 
+                name="Batch"  placeholder="Please enter batch name" >
+                <option value="0">Select batch name</option>
+               </ng-select>
+           </div>
+          
+           
+          </div>
+          
+          <div class="mb-3">
+            <label for="assignedDate" class="form-label">Assigned Date.</label>
+                        <input type="date" class="form-control" autocomplete="off" name="assignedDate"
+                            placeholder="assignedDate" [(ngModel)]="assignedDate">
+          </div>
+
+        <button class="btn btn-primary me-2">Assign</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    </div>
+  </ng-template>
+
+ 
+  <ng-template #lgModalView let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">View Assigned Batch </h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+   
+    <div class="modal-body">
+        <div class="table-responsive">
+            <table class=" table row-border hover">
+                <thead>
+                    <tr>
+                        <th>Sr no.</th>
+                        <th>Course name</th>
+                        <th>Batch name</th>
+                        <th>Assigned date</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let  batch of allAssignedBatches; let i = index">
+                        <th>{{i+1}}</th>
+                        <td>{{batch.course[0].name}}</td>
+                        <td>{{batch.batchName}}</td>
+                        <td>{{batch.date |date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    </div>
+  </ng-template>
+  
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>

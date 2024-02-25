@@ -1,0 +1,118 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Update User</li>
+    </ol>
+  </nav>
+  
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email Id</th>
+                  <th>Mobile</th>
+                  <th>Update Details</th>
+                  <th>Reset Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let users of allUserData; let i = index">
+                  <th>{{i+1}}</th>
+                  <td>{{users.firstName}} {{users.lastName}}</td>
+                  <td>{{users.email}}</td>
+                  <td>{{users.mobileNo}}</td>
+                  <td>
+                    <button class="btn btn-primary me-2" (click)="openLgModal(lgModal,users)">View</button>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary me-2" (click)="openLgModalPassword(lgModalPassword,users)">Reset
+                      Password</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <ng-template #lgModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample" (ngSubmit)="updateUser()">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" autocomplete="off" name="firstName" [(ngModel)]="firstName"
+                placeholder="Please enter first name" onkeydown="return /[a-z]/i.test(event.key)">
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" autocomplete="off" name="lastName" [(ngModel)]="lastName"
+                placeholder="Please enter last name" onkeydown="return /[a-z]/i.test(event.key)">
+            </div>
+            <div class="mb-3">
+              <label for="emailId" class="form-label">Email address</label>
+              <input type="email" class="form-control" placeholder="Please enter email address" name="emailId" [(ngModel)]="emailId" disabled>
+          </div>
+          <div class="mb-3">
+              <label for="mobile" class="form-label">Mobile</label>
+              <input type="text" class="form-control" autocomplete="off" name="mobileNo" [(ngModel)]="mobileNo"
+                  placeholder="Please enter mobile no" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="10">
+          </div>
+           
+            <button class="btn btn-primary me-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    </div>
+  </ng-template>
+  
+  <ng-template #lgModalPassword let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabelPassword">Reset User Password</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample" (ngSubmit)="updateUserPassword()">
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" autocomplete="off" name="newPassword" [(ngModel)]="newPassword"
+                placeholder="New Password">
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" autocomplete="off" name="confirmPassword"
+                [(ngModel)]="confirmPassword" placeholder="Confirm Password">
+            </div>
+            <button class="btn btn-primary me-2">Submit</button>
+          </form>
+  
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    </div>
+  </ng-template>
+  
+<div class="loading" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample" (ngSubmit)="addCourse()">
+            <div class="mb-3">
+              <label for="courseName" class="form-label">Course Name</label>
+              <input type="courseName" class="form-control" autocomplete="off" name="courseName" [(ngModel)]="courseName"
+                placeholder="Please enter course name ">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="formFile">Upload Course Images</label>
+              <input class="form-control" type="file" id="image-uploadify"  type="file"
+                name="file" (change)="getImages($event)">
+            </div>
+            <div class="mb-3">
+              <label for="courseName" class="form-label">Course level </label>
+              <input type="text" class="form-control" autocomplete="off" name="courselevel" [(ngModel)]="courselevel"
+                placeholder="Please enter course level ">
+            </div>
+            <div class="mb-3">
+              <label for="courseName" class="form-label">Course Description </label>
+              <input type="text" class="form-control" autocomplete="off" name="courseDescription" [(ngModel)]="courseDescription"
+                placeholder="Please enter course description">
+            </div>
+       
+            <button class="btn btn-primary me-2">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>name</th>
+                  <th>level</th>
+                  <th>description</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of allCourse; let i = index">
+                  <th>{{i+1}}</th>
+                  <td>{{d.name}} </td>
+                  <td>{{d.level}} </td>
+                  <td>{{d.description}} </td>
+                  
+                  <!-- <td>
+                    <button class="btn btn-primary me-2" (click)="openLgModalAdd(lgModalAdd,d)">Edit</button>
+                    <button class="btn btn-primary me-2" (click)="deleteCourse(d)">Delete</button>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <ng-template #lgModalAdd let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Update Course</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form class="forms-sample" (ngSubmit)="updateCourse()">
+        <div class="mb-3">
+            <label for="courseName" class="form-label"> Course Name</label>
+            <input type="courseName" class="form-control" autocomplete="off" name="courseName" [(ngModel)]="courseName"
+            placeholder="Please enter meeting course name ">
+          </div>
+        <button class="btn btn-primary me-2">Update</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    </div>
+  </ng-template>
+  
+  
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>

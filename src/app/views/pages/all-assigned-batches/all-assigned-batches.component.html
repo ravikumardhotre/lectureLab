@@ -1,0 +1,45 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      Assigned Lecture/Batches List
+    </li>
+  </ol>
+</nav>
+
+<div class="row" style="margin-bottom: 20px">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="row-border hover"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Course Name</th>
+                <th>Date</th>
+                <th>Batch</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of allAssigned; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ a.course[0].name }}</td>
+                <td>{{ a.date | date }}</td>
+                <td>{{ a.batchName }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
