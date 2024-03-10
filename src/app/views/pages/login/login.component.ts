@@ -81,4 +81,10 @@ export class LoginComponent {
       }
     }
   }
+
+async onLoggedinWithGoogle(){  window.open('https://lecture-lab-fu6q.onrender.com/auth/google/callback', '_self');
+  }
+
+
+
 }
